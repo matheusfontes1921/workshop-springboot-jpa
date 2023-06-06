@@ -4,8 +4,7 @@ import com.javacourse.javacourse.enums.OrderStatus;
 import jakarta.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "tb_order")
@@ -18,6 +17,9 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name = "client_id")
     private User client;
+
+    @OneToMany(mappedBy = "id.order")
+    private Set<OrderItem> itens = new HashSet<>();
     public Order(){}
 
     public Order(Long id, Date moment, OrderStatus orderStatus, User client) {
@@ -60,7 +62,9 @@ public class Order implements Serializable {
     public void setClient(User client) {
         this.client = client;
     }
-
+    public Set<OrderItem> getItens(){
+        return itens;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

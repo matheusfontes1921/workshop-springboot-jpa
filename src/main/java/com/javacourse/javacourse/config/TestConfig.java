@@ -1,15 +1,9 @@
 package com.javacourse.javacourse.config;
 
 
-import com.javacourse.javacourse.entities.Category;
-import com.javacourse.javacourse.entities.Order;
-import com.javacourse.javacourse.entities.Product;
-import com.javacourse.javacourse.entities.User;
+import com.javacourse.javacourse.entities.*;
 import com.javacourse.javacourse.enums.OrderStatus;
-import com.javacourse.javacourse.repositories.CategoryRepository;
-import com.javacourse.javacourse.repositories.OrderRepository;
-import com.javacourse.javacourse.repositories.ProductRepository;
-import com.javacourse.javacourse.repositories.UserRepository;
+import com.javacourse.javacourse.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +23,8 @@ public class TestConfig implements CommandLineRunner {
     private CategoryRepository categoryRepository;
     @Autowired
     private ProductRepository productRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
     @Override
     public void run(String... args) throws Exception {
         User u1 = new User(null,"Maria","maria@gmail.com","9888888","1921");
@@ -56,5 +52,11 @@ public class TestConfig implements CommandLineRunner {
         p4.getCategories().add(c3);
         p5.getCategories().add(c2);
         productRepository.saveAll(Arrays.asList(p1,p2,p3,p4,p5));
+        OrderItem oi1 = new OrderItem(o1, p1, 2, p1.getPrice());
+        OrderItem oi2 = new OrderItem(o1, p3, 1, p3.getPrice());
+        OrderItem oi3 = new OrderItem(o2, p2, 4, p2.getPrice());
+        OrderItem oi4 = new OrderItem(o3, p4, 5, p4.getPrice());
+        orderItemRepository.saveAll(Arrays.asList(oi1,oi2,oi3,oi4));
+
     }
 }
